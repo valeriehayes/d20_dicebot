@@ -26,6 +26,7 @@ client.on("messageCreate", (msg) => {
     msg.reply(str);
   }
   if (msg.content.startsWith("!roll")) {
+    /// TODO: add a 'roll in the hay' easter egg command
 
     const diceMetadata = ParseDice(msg.content);
     console.log(diceMetadata);
@@ -102,6 +103,7 @@ function RollDice(metadata) {
 }
 
 function ParseDice(str) {
+  /// TODO: prevent large numbers
   const regexpDice = /([0-9]+)([dD])([0-9]+)([+-])?/
   const regexTest = regexpDice.test(str);
   console.log(regexTest);
