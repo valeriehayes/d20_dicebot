@@ -1,6 +1,4 @@
 const config = require("./config.json");
-///const Discord = require("discord.js");
-///const client = new Discord.Client();
 const { Client, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -17,6 +15,7 @@ client.on("messageCreate", (msg) => {
     console.log('received ping');
     msg.reply("pong");
   }
+  /// TODO: better help mesage for how to format the dice
   if (msg.content === "!d20help") {
     var str = '```Commands:';
     str = str.concat('\n !d20help      This text');
