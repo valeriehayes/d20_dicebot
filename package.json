@@ -10,5 +10,13 @@
   "dependencies": {
     "discord.js": "^13.1.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valeriehayes/d20_dicebot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/valeriehayes/d20_dicebot/issues"
+  },
+  "homepage": "https://github.com/valeriehayes/d20_dicebot#readme",
   "description": ""
 }
