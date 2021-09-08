@@ -20,7 +20,7 @@ client.on("messageCreate", (msg) => {
     var str = '```Commands:';
     str = str.concat('\n !d20help      This text');
     str = str.concat('\n !d20ping      Should respond with "pong"');
-    str = str.concat('\n !roll         Roll dice and return the result.');
+    str = str.concat('\n !roll [x]d[n]        Roll x n-sided dice. + or - immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
     str = str.concat('```');
     msg.reply(str);
   }
