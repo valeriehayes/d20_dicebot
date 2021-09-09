@@ -11,6 +11,10 @@ client.on("messageCreate", (msg) => {
   // only look at messages that start with !
   if (msg.content[0] != '!') return;
 
+  if (msg.content === "!quite") {
+    msg.reply("You really are quite cute.");
+  }
+
   if (msg.content === "!d20ping") {
     console.log('received ping');
     msg.reply("pong");
