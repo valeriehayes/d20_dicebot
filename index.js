@@ -26,7 +26,7 @@ client.on("messageCreate", (msg) => {
   }
 
   if (msg.content.startsWith("!roll")
-      || DiceParser.DiceRegex.test(msg.content)) {
+      || DiceParser.isMatch(msg.content) ) {
     /// TODO: add a 'roll in the hay' easter egg command
 
     const diceMetadata = DiceParser.ParseDice(msg.content);
@@ -48,13 +48,12 @@ function PrettyPrint(metadata, results) {
   var str = "";
 
   str = str.concat("```");
-  str = str.concat(`Total: ${results.total}`);
+  str = str.concat(`Total: ${results.total}\n`);
   if (metadata.modifier) {
-    str = str.concat("\nRoll has ");
-    if (metadata.modifier === '+') {
-      str = str.concat("advantage, dropping lowest")
+    if (metadata.modifier === '>') {
+      str = str.concat("Dropping lowest")
     } else {
-      str = str.concat("disadvantage, dropping highest")
+      str = str.concat("Dropping highest")
     }
   }
   str = str.concat(`\n${results.sorted}`);
