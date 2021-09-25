@@ -1,7 +1,7 @@
 const config = require("./config.json");
 const { Client, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-
+const DiceParser = require("./dice/parser.js");
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -15,25 +15,21 @@ client.on("messageCreate", (msg) => {
     msg.reply("You really are quite cute.");
   }
 
-  if (msg.content === "!d20ping") {
-    console.log('received ping');
-    msg.reply("pong");
-  }
   /// TODO: better help mesage for how to format the dice
   if (msg.content === "!d20help") {
     var str = '```Commands:';
     str = str.concat('\n !d20help      This text');
-    str = str.concat('\n !d20ping      Should respond with "pong"');
     str = str.concat('\n !roll [x]d[n]        Roll x n-sided dice. > or < immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
     str = str.concat('\n ![x]d[n]        same as !roll');
     str = str.concat('```');
     msg.reply(str);
   }
+
   if (msg.content.startsWith("!roll")
-      || /!([0-9]+)([dD])([0-9]+)([+-])?/.test(msg.content)) {
+      || DiceParser.DiceRegex.test(msg.content)) {
     /// TODO: add a 'roll in the hay' easter egg command
 
-    const diceMetadata = ParseDice(msg.content);
+    const diceMetadata = DiceParser.ParseDice(msg.content);
     console.log(diceMetadata);
 
     if (diceMetadata) {
@@ -107,36 +103,6 @@ function RollDice(metadata) {
   return rollMetadata;
 }
 
-function ParseDice(str) {
-  var leaves = str.split(" ");
-  console.log(leaves);
-  if (leaves[0].valueOf() === "!roll") { leaves.shift(); }
-  /// TODO: prevent large numbers
-  const regexpDice = /([0-9]+)([dD])([0-9]+)([><])?/
-  const regexTest = regexpDice.test(leaves[0]);
-  console.log(regexTest);
-  if (!regexTest) { return null; }
-
-  const matches = leaves[0].match(regexpDice);
-  console.log(`matches: ${matches}`);
-  if (matches === null) { return; } /// no matches, just return
-  ///if (matches == null || matches == undefined || !matches) { return; } /// no matches, just return
-
-  const numDice = matches[1];
-  const rollType = matches[2];
-  const dieType = matches[3];
-  const modifier = matches[4];
-  //console.log(`${matches[1]} ${matches[2]} ${matches[3]} ${matches[4]}`)
-  console.log(`${numDice} ${rollType} ${dieType} ${modifier}`)
-
-  const diceMetadata = {
-    'numDice': numDice,
-    'rollType': rollType,
-    'dieType': dieType,
-    'modifier': modifier
-  };
-  return diceMetadata;
-}
 
 function DiceRoller() {
   var self = this;
