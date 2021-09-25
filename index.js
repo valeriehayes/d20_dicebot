@@ -24,11 +24,13 @@ client.on("messageCreate", (msg) => {
     var str = '```Commands:';
     str = str.concat('\n !d20help      This text');
     str = str.concat('\n !d20ping      Should respond with "pong"');
-    str = str.concat('\n !roll [x]d[n]        Roll x n-sided dice. + or - immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
+    str = str.concat('\n !roll [x]d[n]        Roll x n-sided dice. > or < immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
+    str = str.concat('\n ![x]d[n]        same as !roll');
     str = str.concat('```');
     msg.reply(str);
   }
-  if (msg.content.startsWith("!roll")) {
+  if (msg.content.startsWith("!roll")
+      || /!([0-9]+)([dD])([0-9]+)([+-])?/.test(msg.content)) {
     /// TODO: add a 'roll in the hay' easter egg command
 
     const diceMetadata = ParseDice(msg.content);
@@ -106,13 +108,16 @@ function RollDice(metadata) {
 }
 
 function ParseDice(str) {
+  var leaves = str.split(" ");
+  console.log(leaves);
+  if (leaves[0].valueOf() === "!roll") { leaves.shift(); }
   /// TODO: prevent large numbers
   const regexpDice = /([0-9]+)([dD])([0-9]+)([+-])?/
-  const regexTest = regexpDice.test(str);
+  const regexTest = regexpDice.test(leaves[0]);
   console.log(regexTest);
   if (!regexTest) { return null; }
 
-  const matches = str.match(regexpDice);
+  const matches = leaves[0].match(regexpDice);
   console.log(`matches: ${matches}`);
   if (matches === null) { return; } /// no matches, just return
   ///if (matches == null || matches == undefined || !matches) { return; } /// no matches, just return
