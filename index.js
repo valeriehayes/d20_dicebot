@@ -70,7 +70,7 @@ function PrettyPrint(metadata, results) {
 function RollDice(metadata) {
   var dice = [];
   var rollMetadata = {};
-  const explode = (metadata.rollType === 'D') && (metadata.dieType > 3);
+  const reroll_max = (metadata.rollType === 'D') && (metadata.dieType > 3);
 
   /// roll the dice
   for (var i = 0; i < metadata.numDice; i++) {
@@ -78,7 +78,7 @@ function RollDice(metadata) {
     dice.push(roll);
     ///console.log(`i: ${i} roll: ${roll} dieType: ${metadata.dieType}`);
 
-    if (explode && (roll == metadata.dieType)) {
+    if (reroll_max && (roll == metadata.dieType)) {
       ///console.log(`*** extra roll!!! ***`);
       i--; // roll and extra die
     }
@@ -89,10 +89,10 @@ function RollDice(metadata) {
   rollMetadata.sorted = dice.slice();
 
   /// apply advantage/disadvantage (first)
-  if (metadata.modifier === '+') {
+  if (metadata.modifier === '>') {
     /// advantage, remove the lowest roll
     dice.shift();
-  } else if (metadata.modifier === '-') {
+  } else if (metadata.modifier === '<') {
     /// disadvantage, remove highest (last)
     dice.pop();
   }
@@ -112,7 +112,7 @@ function ParseDice(str) {
   console.log(leaves);
   if (leaves[0].valueOf() === "!roll") { leaves.shift(); }
   /// TODO: prevent large numbers
-  const regexpDice = /([0-9]+)([dD])([0-9]+)([+-])?/
+  const regexpDice = /([0-9]+)([dD])([0-9]+)([><])?/
   const regexTest = regexpDice.test(leaves[0]);
   console.log(regexTest);
   if (!regexTest) { return null; }
