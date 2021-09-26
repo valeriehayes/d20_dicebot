@@ -20,6 +20,7 @@
   "homepage": "https://github.com/valeriehayes/d20_dicebot#readme",
   "description": "",
   "devDependencies": {
-    "ava": "^3.15.0"
+    "ava": "^3.15.0",
+    "sinon": "^11.1.2"
   }
 }
