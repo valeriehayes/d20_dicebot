@@ -1,6 +1,7 @@
 (function () {
-  var DiceRegex = /([0-9]+)([dD])([0-9]+)([><])?/;
-  var ParseDice = function(str) {
+  const DiceRegex = /([0-9]+)([dD])([0-9]+)([><])?/;
+
+  const ParseDice = function(str) {
     var leaves = str.split(" "); //get leaves of parse tree
     console.log(leaves);
 
@@ -28,7 +29,7 @@
     return diceMetadata;
   }
 
-  var isMatch = function(str) {
+  const isMatch = function(str) {
     return DiceRegex.test(str);
   }
 
