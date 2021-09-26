@@ -2,10 +2,6 @@ const test = require('ava');
 const DiceParser = require('../lib/parser.js');
 const { Metadata } = require('../lib/dice-common');
 
-test('my passing test', t => {
-  t.pass();
-});
-
 test('1d6', t => {
   var metadata = DiceParser.ParseDie('1d6');
 
