@@ -1,5 +1,15 @@
 const test = require('ava');
-const { RollMetadata, _RollMetadata } = require('../lib/dice-common');
+const DiceCommons = require('../lib/dice-common');
+const sinon = require("sinon");
+const { DiceMetadata } = require('../lib/dice-common');
+
+var RollMetadata;
+var _RollMetadata;
+
+test.before( t => {
+  RollMetadata = DiceCommons.RollMetadata;
+  _RollMetadata = DiceCommons._RollMetadata;
+});
 
 test('my passing test', t => {
   t.pass();
@@ -13,4 +23,23 @@ test('[2,1]', t => {
 test('[3,1]', t => {
   const md = new RollMetadata([3,1], '>');
   t.deepEqual( md, new _RollMetadata("Roll", [1,3], [3], 3) );
+});
+
+test('mock rolldie()', t => {
+  // sinon.replace(
+  //     DiceCommons,
+  //     "_rolldie",
+  //     sinon.fake.returns(8)
+  // );
+  //t.is(DiceCommons._rolldie(6), 8);
+  sinon.replace(
+    Math,
+    "floor",
+    sinon.fake.returns(7) // we add one to this, so this will be 8
+  );
+
+  var retval = DiceCommons.RollDice(new DiceMetadata(1, 'd', 6));
+  t.deepEqual(retval, new _RollMetadata("Roll", [8], [8], 8) );
+
+  sinon.restore();
 });
