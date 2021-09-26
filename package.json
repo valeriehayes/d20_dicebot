@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,8 @@
     "url": "https://github.com/valeriehayes/d20_dicebot/issues"
   },
   "homepage": "https://github.com/valeriehayes/d20_dicebot#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "ava": "^3.15.0"
+  }
 }
