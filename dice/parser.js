@@ -1,3 +1,5 @@
+"use strict";
+
 (function () {
   const DiceRegex = /([0-9]+)([dD])([0-9]+)([><])?/;
 
