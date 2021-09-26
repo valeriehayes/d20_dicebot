@@ -35,7 +35,7 @@ client.on("messageCreate", (msg) => {
     console.log(diceMetadata);
 
     if (diceMetadata) {
-      const results = RollDice(diceMetadata);
+      const results = DiceParser.RollDice(diceMetadata);
       console.log(results);
 
       const prettyPrint = PrettyPrint(diceMetadata, results);
@@ -62,52 +62,6 @@ function PrettyPrint(metadata, results) {
   str = str.concat("```");
 
   return str;
-}
-
-function RollDice(metadata) {
-  var dice = [];
-  var rollMetadata = {};
-  const reroll_max = (metadata.rollType === 'D') && (metadata.dieType > 3);
-
-  /// roll the dice
-  for (var i = 0; i < metadata.numDice; i++) {
-    const roll = rolldie(metadata.dieType);
-    dice.push(roll);
-    ///console.log(`i: ${i} roll: ${roll} dieType: ${metadata.dieType}`);
-
-    if (reroll_max && (roll == metadata.dieType)) {
-      ///console.log(`*** extra roll!!! ***`);
-      i--; // roll and extra die
-    }
-  }
-
-  dice.sort((x,y) => x - y); // sort ascending
-  console.log(`sorted dice: ${dice}`)
-  rollMetadata.sorted = dice.slice();
-
-  /// apply advantage/disadvantage (first)
-  if (metadata.modifier === '>') {
-    /// advantage, remove the lowest roll
-    dice.shift();
-  } else if (metadata.modifier === '<') {
-    /// disadvantage, remove highest (last)
-    dice.pop();
-  }
-  console.log(`modified dice: ${dice}`)
-  rollMetadata.modified = dice;
-
-  /// get the total
-  const total = dice.reduce((x, y) => x + y, 0);
-  console.log(`total: ${total}`);
-  rollMetadata.total = total;
-
-  return rollMetadata;
-}
-
-function rolldie(d) {
-  var roll = Math.floor(Math.random() * d) + 1;
-  console.log('**** roll (' + d + '): ' + roll)
-  return roll;
 }
 
 client.login(config.BOT_TOKEN);
