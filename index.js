@@ -3,7 +3,7 @@
 const config = require("./config.json");
 const { Client, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const DiceParser = require("./dice/parser.js");
+const DiceParser = require("./lib/parser.js");
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
