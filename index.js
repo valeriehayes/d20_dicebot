@@ -31,7 +31,7 @@ client.on("messageCreate", (msg) => {
       || DiceParser.isMatch(msg.content) ) {
     /// TODO: add a 'roll in the hay' easter egg command
 
-    const diceMetadata = DiceParser.ParseDice(msg.content);
+    const diceMetadata = DiceParser.ParseDie(msg.content);
     console.log(diceMetadata);
 
     if (diceMetadata) {
