@@ -1,14 +1,15 @@
 const test = require('ava');
 const DiceCommons = require('../lib/dice-common');
 const sinon = require("sinon");
-const { DiceMetadata } = require('../lib/dice-common');
 
 var RollMetadata;
 var _RollMetadata;
+var DiceMetadata
 
 test.before( t => {
   RollMetadata = DiceCommons.RollMetadata;
   _RollMetadata = DiceCommons._RollMetadata;
+  DiceMetadata = DiceCommons.DiceMetadata;
 });
 
 test('my passing test', t => {
