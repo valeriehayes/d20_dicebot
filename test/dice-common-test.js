@@ -3,18 +3,19 @@
 const test = require('ava');
 const DiceCommons = require('../lib/dice-common');
 const sinon = require("sinon");
-const { SumAllRolls } = require('../lib/dice-common');
 
 var ProcessRolls;
 var _RollInfo;
 var DiceGroup;
-var Node;
+var RollAllGroups;
+var SumAllRolls;
 
 test.before( t => {
   ProcessRolls = DiceCommons.ProcessRolls;
   _RollInfo = DiceCommons._RollInfo;
   DiceGroup = DiceCommons.DiceGroup;
-  Node = DiceCommons.Node;
+  SumAllRolls = DiceCommons.SumAllRolls;
+  RollAllGroups = DiceCommons.RollAllGroups;
 });
 
 test('my passing test', t => {
@@ -70,4 +71,22 @@ test('1d6 + 1d8', t => {
   );
 
   t.is(sum, 10);
+});
+
+test('convert list of dicegroup into list of _RollInfo', t => {
+  var callback = sinon.stub();
+  callback.onCall(0).returns(2);
+  callback.onCall(1).returns(6);
+  sinon.replace(Math, "floor", callback);
+
+  var retval = RollAllGroups(
+    [new DiceGroup(1, 'd', 6),
+    new DiceGroup(1, 'd', 8)]
+  )
+  t.deepEqual(retval, [
+    new _RollInfo([3], [3], 3),
+    new _RollInfo([7], [7], 7),
+  ])
+
+  sinon.restore();
 });
