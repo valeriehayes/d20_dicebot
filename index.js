@@ -32,14 +32,14 @@ client.on("messageCreate", (msg) => {
       || DiceParser.isMatch(msg.content) ) {
     /// TODO: add a 'roll in the hay' easter egg command
 
-    const diceMetadata = DiceParser.ParseDie(msg.content);
-    console.log(diceMetadata);
+    const diceGroup = DiceParser.ParseDie(msg.content);
+    console.log(diceGroup);
 
-    if (diceMetadata) {
-      const results = RollDice(diceMetadata);
+    if (diceGroup) {
+      const results = RollDice(diceGroup);
       console.log(results);
 
-      const prettyPrint = PrettyPrint(diceMetadata, results);
+      const prettyPrint = PrettyPrint(diceGroup, results);
       msg.channel.send(prettyPrint);
     }
   }
@@ -47,13 +47,13 @@ client.on("messageCreate", (msg) => {
   return;
 });
 
-function PrettyPrint(metadata, results) {
+function PrettyPrint(diceGroup, results) {
   var str = "";
 
   str = str.concat("```");
   str = str.concat(`Total: ${results.total}\n`);
-  if (metadata.modifier) {
-    if (metadata.modifier === '>') {
+  if (diceGroup.modifier) {
+    if (diceGroup.modifier === '>') {
       str = str.concat("Dropping lowest")
     } else {
       str = str.concat("Dropping highest")
