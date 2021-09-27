@@ -1,8 +1,8 @@
 "use strict";
 
 const test = require('ava');
-const DiceCommons = require('../../src/lib/dice-common');
 const sinon = require("sinon");
+const DiceCommons = require('../../build/src/lib/dice-common');
 
 var ProcessRolls;
 var _RollInfo;
