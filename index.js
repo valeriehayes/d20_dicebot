@@ -4,7 +4,7 @@ const config = require("./config.json");
 const { Client, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const DiceParser = require("./lib/parser.js");
-const {RollDice} = require("./lib/dice-common.js");
+const {RollDice, RollAllGroups, SumAllRolls} = require("./lib/dice-common.js");
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -22,7 +22,7 @@ client.on("messageCreate", (msg) => {
   if (msg.content === "!d20help") {
     var str = '```Commands:';
     str = str.concat('\n !d20help      This text');
-    str = str.concat('\n !roll [x]d[n]        Roll x n-sided dice. > or < immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
+    str = str.concat('\n !roll [x]d[n] [y]d[m]...       Roll x n-sided dice plus y m-sided dice, etc. > or < immediately after the dice will drop the lowest or highest die, respectively. Using \'D\' will cause max rolls to roll again.');
     str = str.concat('\n ![x]d[n]        same as !roll');
     str = str.concat('```');
     msg.reply(str);
@@ -32,36 +32,41 @@ client.on("messageCreate", (msg) => {
       || DiceParser.isMatch(msg.content) ) {
     /// TODO: add a 'roll in the hay' easter egg command
 
-    const diceGroup = DiceParser.ParseDie(msg.content);
-    console.log(diceGroup);
+    const diceGroups = DiceParser.ParseAll(msg.content);
+    const rollInfos = RollAllGroups(diceGroups);
+    const total = SumAllRolls(rollInfos);
 
-    if (diceGroup) {
-      const results = RollDice(diceGroup);
-      console.log(results);
+    const prettyPrint = PrettyPrint(total, diceGroups, rollInfos);
 
-      const prettyPrint = PrettyPrint(diceGroup, results);
-      msg.channel.send(prettyPrint);
-    }
+    msg.channel.send(prettyPrint);
   }
 
   return;
 });
 
-function PrettyPrint(diceGroup, results) {
+function PrettyPrint(total, diceGroups, rollInfos) {
   var str = "";
-
   str = str.concat("```");
-  str = str.concat(`Total: ${results.total}\n`);
-  if (diceGroup.modifier) {
-    if (diceGroup.modifier === '>') {
-      str = str.concat("Dropping lowest")
-    } else {
-      str = str.concat("Dropping highest")
+
+  // console.log(diceGroups);
+  str = str.concat(`Total: ${total}`);
+  for (var i = 0; i < diceGroups.length; i++) {
+    var diceGroup = diceGroups[i];
+    var rollInfo = rollInfos[i];
+
+    // console.log(diceGroup.str);
+    str = str.concat(`\n${diceGroup.str}`);
+    if (diceGroup.op) {
+      if (diceGroup.op === '>') {
+        str = str.concat(" Dropping lowest")
+      } else {
+        str = str.concat(" Dropping highest")
+      }
     }
+    str = str.concat(` : ${rollInfo.sorted}`);
   }
-  str = str.concat(`\n${results.sorted}`);
-  str = str.concat("```");
 
+  str = str.concat("```");
   return str;
 }
 
