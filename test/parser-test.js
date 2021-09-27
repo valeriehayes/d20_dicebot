@@ -1,3 +1,5 @@
+"use strict";
+
 const test = require('ava');
 const DiceParser = require('../lib/parser.js');
 const { DiceMetadata, _RollMetadata } = require('../lib/dice-common');
@@ -26,12 +28,28 @@ test('2d6>', t => {
   t.deepEqual(metadata, new DiceMetadata(2, 'd', 6, '>') );
 });
 
-test('1d8 + 1d6', t=> {
+test('1d8 + 1d6', t => {
   var metadata = DiceParser.ParseAll('1d8 + 1d6');
 
   t.deepEqual(metadata,
     [new DiceMetadata(1, 'd', 8),
     new _RollMetadata("Op", undefined, undefined, undefined, '+'),
     new DiceMetadata(1, 'd', 6)]
+  );
+});
+
+test('1d20', t => {
+  var metadata = DiceParser.ParseAll('1d20');
+
+  t.deepEqual(metadata,
+    [new DiceMetadata(1, 'd', 20)]
+  );
+});
+
+test('2d20>', t => {
+  var metadata = DiceParser.ParseAll('2d20>');
+
+  t.deepEqual(metadata,
+    [new DiceMetadata(2, 'd', 20, '>')]
   );
 });

@@ -1,3 +1,5 @@
+"use strict";
+
 const test = require('ava');
 const DiceCommons = require('../lib/dice-common');
 const sinon = require("sinon");
