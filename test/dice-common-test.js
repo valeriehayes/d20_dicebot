@@ -41,7 +41,7 @@ test('mock rolldie()', t => {
     sinon.fake.returns(7) // we add one to this, so this will be 8
   );
 
-  var retval = DiceCommons.RollDice(new DiceMetadata(1, 'd', 6));
+  var retval = DiceCommons.RollDice(new DiceMetadata("Roll", 1, 'd', 6));
   t.deepEqual(retval, new _RollMetadata("Roll", [8], [8], 8) );
 
   sinon.restore();
@@ -54,7 +54,7 @@ test('roll 2d6', t => {
   sinon.replace(Math, "floor", callback);
   // sinon.replace(DiceCommons, "_rolldie", callback);
 
-  var retval = DiceCommons.RollDice(new DiceMetadata(2, 'd', 6, undefined));
+  var retval = DiceCommons.RollDice(new DiceMetadata("Roll", 2, 'd', 6, undefined));
   t.deepEqual(retval, new _RollMetadata("Roll", [3, 5], [3, 5], 8));
 
   sinon.restore();
