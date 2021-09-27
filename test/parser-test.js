@@ -2,7 +2,7 @@
 
 const test = require('ava');
 const DiceParser = require('../lib/parser.js');
-const { DiceMetadata, _RollMetadata } = require('../lib/dice-common');
+const { DiceMetadata } = require('../lib/dice-common');
 
 test('1d6', t => {
   var metadata = DiceParser.ParseDie('1d6');
