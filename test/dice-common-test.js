@@ -3,6 +3,7 @@
 const test = require('ava');
 const DiceCommons = require('../lib/dice-common');
 const sinon = require("sinon");
+const { SumAllRolls } = require('../lib/dice-common');
 
 var ProcessRolls;
 var _RollInfo;
@@ -60,4 +61,13 @@ test('roll 2d6', t => {
   t.deepEqual(retval, new _RollInfo([3, 5], [3, 5], 8));
 
   sinon.restore();
+});
+
+test('1d6 + 1d8', t => {
+  var sum = SumAllRolls(
+    [new _RollInfo([3], [3], 3),
+    new _RollInfo([7], [7], 7)]
+  );
+
+  t.is(sum, 10);
 });
