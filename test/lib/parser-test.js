@@ -1,8 +1,8 @@
 "use strict";
 
 const test = require('ava');
-const DiceParser = require('../lib/parser.js');
-const { DiceGroup } = require('../lib/dice-common');
+const DiceParser = require('../../src/lib/parser.js');
+const { DiceGroup } = require('../../src/lib/dice-common');
 
 test('1d6', t => {
   var metadata = DiceParser.ParseDie('1d6');
