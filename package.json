@@ -17,7 +17,7 @@
       "compile": false
     }
   },
-  "author": "",
+  "author": "Valerie Hayes",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.1.0"
