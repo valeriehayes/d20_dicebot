@@ -6,7 +6,10 @@
     },
     "outDir": "build",
     "allowJs": false,
-    "target": "es5"
+    "target": "es5",
+    "moduleResolution": "node",
+    // "module": "commonjs"
+    "module": "es2015"
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["build"]

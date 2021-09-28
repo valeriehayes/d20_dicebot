@@ -1,22 +1,10 @@
 "use strict";
 
-const test = require('ava');
-const sinon = require("sinon");
-const DiceCommons = require('../../build/src/lib/dice-common');
+import test from 'ava';
+import sinon from 'sinon';
 
-var ProcessRolls;
-var _RollInfo;
-var DiceGroup;
-var RollAllGroups;
-var SumAllRolls;
-
-test.before( t => {
-  ProcessRolls = DiceCommons.ProcessRolls;
-  _RollInfo = DiceCommons._RollInfo;
-  DiceGroup = DiceCommons.DiceGroup;
-  SumAllRolls = DiceCommons.SumAllRolls;
-  RollAllGroups = DiceCommons.RollAllGroups;
-});
+import { ProcessRolls, _RollInfo, RollDice, DiceGroup, RollAllGroups, SumAllRolls }
+   from '../../build/lib/dice-common.js';
 
 test('my passing test', t => {
   t.pass();
@@ -38,14 +26,14 @@ test('mock rolldie()', t => {
   //     "_rolldie",
   //     sinon.fake.returns(8)
   // );
-  //t.is(DiceCommons._rolldie(6), 8);
+  //t.is(_rolldie(6), 8);
   sinon.replace(
     Math,
     "floor",
     sinon.fake.returns(7) // we add one to this, so this will be 8
   );
 
-  var retval = DiceCommons.RollDice(new DiceGroup(1, 'd', 6));
+  var retval = RollDice(new DiceGroup(1, 'd', 6));
   t.deepEqual(retval, new _RollInfo([8], [8], 8) );
 
   sinon.restore();
@@ -58,7 +46,7 @@ test('roll 2d6', t => {
   sinon.replace(Math, "floor", callback);
   // sinon.replace(DiceCommons, "_rolldie", callback);
 
-  var retval = DiceCommons.RollDice(new DiceGroup(2, 'd', 6, undefined));
+  var retval = RollDice(new DiceGroup(2, 'd', 6, undefined));
   t.deepEqual(retval, new _RollInfo([3, 5], [3, 5], 8));
 
   sinon.restore();

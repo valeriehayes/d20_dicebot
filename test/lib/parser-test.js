@@ -1,35 +1,35 @@
 "use strict";
 
-const test = require('ava');
-const DiceParser = require('../../build/src/lib/parser');
-const { DiceGroup } = require('../../build/src/lib/dice-common');
+import test from 'ava';
+import { DiceGroup } from '../../build/lib/dice-common.js';
+import { ParseAll } from '../../build/lib/parser.js';
 
 test('1d6', t => {
-  var metadata = DiceParser.ParseDie('1d6');
+  var metadata = ParseDie('1d6');
 
   t.deepEqual(metadata, new DiceGroup(1, 'd', 6, null, "1d6"));
 });
 
 test('1D6', t => {
-  var metadata = DiceParser.ParseDie('1D6');
+  var metadata = ParseDie('1D6');
 
   t.deepEqual(metadata, new DiceGroup(1, 'D', 6, null, "1D6") );
 });
 
 test('2d6', t => {
-  var metadata = DiceParser.ParseDie('2d6');
+  var metadata = ParseDie('2d6');
 
   t.deepEqual(metadata, new DiceGroup(2, 'd', 6, null, "2d6") );
 });
 
 test('2d6>', t => {
-  var metadata = DiceParser.ParseDie('2d6>');
+  var metadata = ParseDie('2d6>');
 
   t.deepEqual(metadata, new DiceGroup(2, 'd', 6, '>', "2d6>") );
 });
 
 test('1d8 + 1d6', t => {
-  var metadata = DiceParser.ParseAll('1d8 + 1d6');
+  var metadata = ParseAll('1d8 + 1d6');
 
   t.deepEqual(metadata,
     [new DiceGroup(1, 'd', 8, null, "1d8"),
@@ -38,7 +38,7 @@ test('1d8 + 1d6', t => {
 });
 
 test('1d20', t => {
-  var metadata = DiceParser.ParseAll('1d20');
+  var metadata = ParseAll('1d20');
 
   t.deepEqual(metadata,
     [new DiceGroup(1, 'd', 20, null, "1d20")]
@@ -46,7 +46,7 @@ test('1d20', t => {
 });
 
 test('2d20>', t => {
-  var metadata = DiceParser.ParseAll('2d20>');
+  var metadata = ParseAll('2d20>');
 
   t.deepEqual(metadata,
     [new DiceGroup(2, 'd', 20, '>', "2d20>")]
