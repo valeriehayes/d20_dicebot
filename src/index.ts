@@ -1,16 +1,17 @@
 "use strict";
 
 const config = require("./config.json");
-const { Client, Intents } = require("discord.js");
+import { isMatch, ParseAll} from "./lib/parser";
+import { Client, Intents, Message } from "discord.js";
+import { RollAllGroups, SumAllRolls, DiceGroup, _RollInfo } from "./lib/dice-common";
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const DiceParser = require("./lib/parser.js");
-const {RollDice, RollAllGroups, SumAllRolls} = require("./lib/dice-common.js");
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("messageCreate", (msg) => {
+client.on("messageCreate", (msg : Message) => {
   // only look at messages that start with !
   if (msg.content[0] != '!') return;
 
@@ -29,10 +30,10 @@ client.on("messageCreate", (msg) => {
   }
 
   if (msg.content.startsWith("!roll")
-      || DiceParser.isMatch(msg.content) ) {
+      || isMatch(msg.content) ) {
     /// TODO: add a 'roll in the hay' easter egg command
 
-    const diceGroups = DiceParser.ParseAll(msg.content);
+    const diceGroups = ParseAll(msg.content);
     const rollInfos = RollAllGroups(diceGroups);
     const total = SumAllRolls(rollInfos);
 
@@ -44,7 +45,7 @@ client.on("messageCreate", (msg) => {
   return;
 });
 
-function PrettyPrint(total, diceGroups, rollInfos) {
+function PrettyPrint(total : number, diceGroups : DiceGroup[], rollInfos : _RollInfo[]) {
   var str = "";
   str = str.concat("```");
 

@@ -4,7 +4,7 @@ const { DiceGroup } = require('../lib/dice-common');
 
 const DiceRegex = /([0-9]+)([dD])([0-9]+)([><])?/;
 
-const ParseAll = function(str : string) {
+export const ParseAll = function(str : string) {
   var leaves = str.split(" "); //get leaves of parse tree
   // console.log(leaves);
 
@@ -29,7 +29,7 @@ const ParseAll = function(str : string) {
   return diceGroups;
 }
 
-const ParseDie = function(str : string) {
+export const ParseDie = function(str : string) {
   /// TODO: prevent large numbers
 
   if ( !isMatch(str) ) {
@@ -47,12 +47,6 @@ const ParseDie = function(str : string) {
   return new DiceGroup(numDice, rollType, dieType, op, str);
 }
 
-const isMatch = function(str : string ) {
+export const isMatch = function(str : string ) {
   return DiceRegex.test(str);
-}
-
-module.exports = {
-  isMatch : isMatch,
-  ParseDie: ParseDie,
-  ParseAll: ParseAll
 }
