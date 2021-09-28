@@ -3,4 +3,4 @@ FROM node:16
 WORKDIR /home/ubuntu/work
 COPY . .
 RUN npm update
-CMD ["node", "./built/index.js"]
+CMD ["node", "./build/index.js"]
