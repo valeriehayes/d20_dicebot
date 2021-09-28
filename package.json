@@ -6,6 +6,7 @@
     "test": "ava"
   },
   "ava": {
+    "require": [ "esm" ],
     "typescript": {
       "rewritePaths": {
         "src/": "build/"
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@ava/typescript": "^2.0.0",
     "ava": "^3.15.0",
+    "esm": "^3.2.25",
     "sinon": "^11.1.2"
   }
 }
