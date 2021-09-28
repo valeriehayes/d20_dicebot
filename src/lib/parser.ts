@@ -32,6 +32,9 @@ export const ParseAll = function(str : string) {
 export const ParseDie = function(str : string) {
   /// TODO: prevent large numbers
 
+  if ( /^[0-9]+$/.test(str)) {
+    return new DiceGroup(str, 'd', '1', str); // constant uses 1-sided dice
+  }
   if ( !isMatch(str) ) {
     // just assume multiple dice groups are added; get rid of '+' or any other junk
     return null;

@@ -28,6 +28,11 @@ test('2d6>', t => {
   t.deepEqual(metadata, new DiceGroup(2, 'd', 6, '>', "2d6>") );
 });
 
+test('test constant: 2', t => {
+  var diceGroup = ParseDie("2");
+  t.deepEqual(diceGroup, new DiceGroup(2, 'd', 1, "2") );
+});
+
 test('1d8 + 1d6', t => {
   var metadata = ParseAll('1d8 + 1d6');
 
