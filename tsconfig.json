@@ -8,8 +8,8 @@
     "allowJs": false,
     "target": "es5",
     "moduleResolution": "node",
-    // "module": "commonjs"
-    "module": "es2015"
+    "resolveJsonModule": true,
+    "module": "commonjs"
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["build"]

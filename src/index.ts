@@ -1,6 +1,6 @@
 "use strict";
 
-const config = require("./config.json");
+import { config } from "./config";
 import { isMatch, ParseAll} from "./lib/parser";
 import { Client, Intents, Message } from "discord.js";
 import { RollAllGroups, SumAllRolls, DiceGroup, _RollInfo } from "./lib/dice-common";

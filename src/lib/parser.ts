@@ -1,6 +1,6 @@
 "use strict";
 
-const { DiceGroup } = require('../lib/dice-common');
+import { DiceGroup } from '../lib/dice-common';
 
 const DiceRegex = /([0-9]+)([dD])([0-9]+)([><])?/;
 

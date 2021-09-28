@@ -2,7 +2,7 @@
 
 import test from 'ava';
 import { DiceGroup } from '../../build/lib/dice-common.js';
-import { ParseAll } from '../../build/lib/parser.js';
+import { ParseAll, ParseDie } from '../../build/lib/parser.js';
 
 test('1d6', t => {
   var metadata = ParseDie('1d6');
