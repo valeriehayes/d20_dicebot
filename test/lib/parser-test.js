@@ -30,7 +30,7 @@ test('2d6>', t => {
 
 test('test constant: 2', t => {
   var diceGroup = ParseDie("2");
-  t.deepEqual(diceGroup, new DiceGroup(2, 'd', 1, "2") );
+  t.deepEqual(diceGroup, new DiceGroup(2, 'd', 1, null, "2") );
 });
 
 test('1d8 + 1d6', t => {
@@ -39,6 +39,15 @@ test('1d8 + 1d6', t => {
   t.deepEqual(metadata,
     [new DiceGroup(1, 'd', 8, null, "1d8"),
     new DiceGroup(1, 'd', 6, null, "1d6")]
+  );
+});
+
+test('1d6 3', t => {
+  var metadata = ParseAll('1d6 3');
+
+  t.deepEqual(metadata,
+    [new DiceGroup(1, 'd', 6, null, "1d6"),
+    new DiceGroup(3, 'd', 1, null, "3")]
   );
 });
 

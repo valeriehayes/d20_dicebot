@@ -57,7 +57,7 @@ function PrettyPrint(total : number, diceGroups : DiceGroup[], rollInfos : _Roll
 
     // console.log(diceGroup.str);
     str = str.concat(`\n${diceGroup.str}`);
-    if (diceGroup.dieType == 1) {
+    if (diceGroup.dieType != 1) {
       if (diceGroup.op) {
         if (diceGroup.op === '>') {
           str = str.concat(" Dropping lowest")
